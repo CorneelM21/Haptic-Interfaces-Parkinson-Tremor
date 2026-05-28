@@ -78,7 +78,15 @@ The system architecture was designed around a three-tier logic flow: Input, Logi
 Building the prototype required several practical steps:
 1. **Exoskeleton Integration:** We assembled the EduExo kit and mounted the EMG sensors on the user's [specify the muscle group, e.g., forearm/biceps]. 
 2. **Control Logic:** The suppression algorithm was programmed to filter out tremor frequencies. When a deliberate movement is detected via the EMG, the motors allow the movement; when a tremor is detected, the motors actively resist it.
-3. **VR Programming:** Using Unity, we programmed a liquid physics simulation and collision detection for the glasses. The scoring system calculates the ratio of correctly poured liquid versus spilled liquid to quantify the user's motor control.
+
+The practical construction of the prototype prioritized ergonomics and physical realism. The work surface, bottle, and glasses were positioned at a standard ergonomic height (Y ≈ 0.8). To ensure a reliable program and prevent users from accidentally walking off the virtual floor plane, an "invisible wall" was constructed using primitive cubes with disabled `Mesh Renderers` and active `Box Colliders`.
+
+To simulate realistic glass-on-glass interactions, the bottle and glasses were equipped with Rigidbodies (mass) and Colliders (solid surfaces). A custom Unity Physics Material was created with zero bounciness and low friction properties, ensuring the objects interacted with an abrupt, hard impact typical of real glass.
+
+The simulation logic required careful programming to handle edge cases and scalability:
+* **Accuracy Logic:** The `ScoreManager` script originally calculated accuracy by dividing the water in the glass by the total water poured, causing a visual bug showing "100% accuracy" before pouring occurred. This was restructured using conditional statements (`if (totaalWater == 0)`) to display a placeholder (`--%`) until the first particle triggers the system.
+* **Scalable Resets:** To accommodate varying difficulty levels, the `ResetKnop` script utilizes C# arrays (`[]`) to efficiently store, iterate through, and recall the exact startup positions and rotations of multiple glasses simultaneously.
+
 
 ### 3.4 Hardware Constraints & Troubleshooting
 During development, we managed several constraints:
@@ -86,13 +94,12 @@ During development, we managed several constraints:
 * **Actuator Control:** Tuning the PID controller of the EduExo to feel supportive rather than restrictive required iterative testing to find the right balance.
 * **Decoupling:** Ensuring the user could wear the Quest 3 comfortably while the exoskeleton was active required careful cable management and physical workspace setup.
 
-The practical construction of the prototype prioritized ergonomics and physical realism. The work surface, bottle, and glasses were positioned at a standard ergonomic height (Y ≈ 0.8). To ensure a reliable program and prevent users from accidentally walking off the virtual floor plane, an "invisible wall" was constructed using primitive cubes with disabled `Mesh Renderers` and active `Box Colliders`.
+During iterative development, several technical constraints were identified and resolved to ensure a stable user experience:
 
-To simulate realistic glass-on-glass interactions, the bottle and glasses were equipped with Rigidbodies (mass) and Colliders (solid surfaces). A custom Unity Physics Material was created with zero bounciness and low friction properties, ensuring the objects interacted with an abrupt, hard impact typical of real glass.
-
-The simulation logic required careful programming to handle edge cases and scalability:
-* Accuracy Logic: The `ScoreManager` script originally calculated accuracy by dividing the water in the glass by the total water poured, causing a visual bug showing "100% accuracy" before pouring occurred. This was restructured using conditional statements (`if (totaalWater == 0)`) to display a placeholder (`--%`) until the first particle triggers the system.
-* Scalable Resets: To accommodate varying difficulty levels, the `ResetKnop` script utilizes C# arrays (`[]`) to efficiently store, iterate through, and recall the exact startup positions and rotations of multiple glasses simultaneously.
+* **Tracking Origin Constraint:** Early testing revealed a calibration issue where the virtual table appeared to float at chest height because the headset tracking origin defaulted to *Eye Level*. This was resolved by forcing the OVR Manager to use *Floor Level* tracking.
+* **Physics Ghosting:** The default grab mechanics caused held objects to become *Kinematic* (ignoring the physics engine). When holding the bottle and glass, they phased through one another. This was resolved by disabling `Kinematic While Selected` and utilizing *Velocity Tracking*, forcing objects to follow hands using physical forces rather than teleportation.
+* **Momentum During Reset:** Resetting a falling object simply teleported it to the table, but it retained its downward momentum and instantly shot through the virtual wood. This was corrected by refining the reset function to explicitly access each object's `Rigidbody` and set both `velocity` and `angularVelocity` to `Vector3.zero` during teleportation.
+* **Exhibition Casting Constraints:** For public demonstrations and clinical supervision, mirroring the headset view to an external monitor was required. To bypass the high latency of public Wi-Fi networks, a hardwired USB-C connection utilizing the **Meta Quest Developer Hub (MQDH)** was implemented, guaranteeing high-quality, zero-latency casting.
 
 ## 4. Discussion
 Upon testing the prototype, the dual-system approach proved [describe performance—was it effective?]. The EduExo successfully provided resistance to simulated tremors, while the VR environment accurately tracked the pouring task. 
