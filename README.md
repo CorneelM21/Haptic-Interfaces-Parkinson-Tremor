@@ -14,13 +14,9 @@ By proposing a decoupled architecture where the physical exoskeleton (EduExo) an
 ## 2. Supplies (Bill of Materials)
 To ensure full reproducibility, below is the comprehensive list of components required to build this prototype:
 
-# Supplies: Bill of Materials (BOM)
-
-This document outlines the complete Bill of Materials (BOM) required to replicate this prototype. It integrates the **EduExo 2.0 (Lite)** exoskeleton kit with a **Meta Quest 3S** virtual reality environment built in **Unity**.
-
 All estimated costs are provided in Euros (€).
 
-## 1. Exoskeleton Core Kit
+### 1. Exoskeleton Core Kit
 
 The physical exoskeleton, including all structural components, motors, and sensors, is sourced as a complete kit.
 
@@ -28,7 +24,7 @@ The physical exoskeleton, including all structural components, motors, and senso
 | :--- | :--- | :--- | :--- |
 | **EduExo 2.0 (Lite Kit)** | Complete kit containing 3D-printed parts, cuffs, Arduino Nano, EMG sensor, motor, and cables. | ~€350.00 | [Auxivo Store](https://www.auxivo.com/product-page/eduexo-2-0) |
 
-## 2. VR & Software Requirements
+### 2. VR & Software Requirements
 
 These components are required to run and develop the virtual reality simulation.
 
@@ -37,7 +33,7 @@ These components are required to run and develop the virtual reality simulation.
 | **Meta Quest 3S (128GB)** | Standalone VR Headset for running the simulation. | €329.99 | [Amazon](https://www.amazon.de/s?k=meta+quest+3s) |
 | **Unity Software** | Game engine used for VR development (Personal Edition). | €0.00 | [Unity Download](https://unity.com/download) |
 
-## 3. Required Tools & Equipment
+### 3. Required Tools & Equipment
 
 To fully assemble the EduExo 2.0 prototype, you will need the following workspace tools and equipment. These can be sourced from standard hardware stores or Amazon.
 
