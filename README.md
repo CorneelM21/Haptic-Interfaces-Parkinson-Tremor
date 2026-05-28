@@ -5,7 +5,8 @@ Project for Haptic Interfaces Course
 ## 1. Introduction
 *The medical context:* In current medical practice, Parkinson's disease-induced resting and action tremors present a significant challenge, severely impacting patients' quality of life and their ability to perform activities of daily living (ADLs) such as drinking or eating [1], [2]. It also has a large distressing impact on their social abilities and mental health, even in early-stage PArkinson's disease.
 
-*The haptic advantage:* Haptic technology offers a unique advantage here by providing active mechanical damping to physically counteract the tremors in real-time, while simultaneously offering a safe, simulated environment for motor-skill training.
+*The haptic advantage:* Haptic technology offers a unique advantage here by providing active mechanical damping to physically counteract the tremors in real-time, while simultaneously offering a safe, simulated environment for motor-skill training. The WOTAS project already proved the possibility to suppress tremors using a robotic exoskeleton [3]. It shows that applying internal forces, so called haptic resistance, at the tremor frequency is a valid control strategy.
+
 *Existing solutions and gaps:* Existing solutions often rely heavily on pharmaceuticals, which can have severe side effects, or passive weighted wearables that cause muscle fatigue. This project aims to address these limitations by creating a dual-modality system: an active exoskeleton that differentiates between voluntary movement and involuntary tremors, paired with a completely decoupled Virtual Reality (VR) assessment environment. 
 
 ## 2. Supplies (Bill of Materials)
@@ -62,3 +63,4 @@ For future development, we suggest:
 ## 6. References
 [1] L. E. Heusinkveld et al., "Impact of Tremor on Patients With Early Stage Parkinson's Disease," Front. Neurol., vol. 9, p. 628, Aug. 2018.
 [2] R. A. Hauser et al., "Burden of tremor in Parkinson's disease: A survey study," J. Parkinsons Dis., vol. 15, no. 3, pp. 541-551, Mar. 2025.
+[3] E. Rocon et al., "Design and Validation of a Rehabilitation Robotic Exoskeleton for Tremor Assessment and Suppression," IEEE Trans. Neural Syst. Rehabil. Eng., vol. 15, no. 3, pp. 367-378, Sep. 2007.
