@@ -5,20 +5,55 @@ Project for Haptic Interfaces Course
 ## 1. Introduction
 *The medical context:* In current medical practice, Parkinson's disease-induced resting and action tremors present a significant challenge, severely impacting patients' quality of life and their ability to perform activities of daily living (ADLs) such as drinking or eating [1], [2]. It also has a large distressing impact on their social abilities and mental health, even in early-stage PArkinson's disease.
 
-*The haptic advantage:* Haptic technology offers a unique advantage here by providing active mechanical damping to physically counteract the tremors in real-time, while simultaneously offering a safe, simulated environment for motor-skill training. The WOTAS project already proved the possibility to suppress tremors using a robotic exoskeleton [3]. It shows that applying internal forces, so called haptic resistance, at the tremor frequency is a valid control strategy.
+*The haptic advantage:* Haptic technology offers a multi-modal advantage by addressing both the physical and cognitive requirements of Parkinson's disease rehabilitation. Physically, active mechanical damping systems can dynamically counteract involuntary resting and action tremors in real-time, providing targeted resistance that dampens pathological oscillations without impeding a patient's voluntary motor intents [4]. Cognitively, haptic components can be simulated inside immersive virtual reality (VR) spaces to provide a safe, repeatable environment where patients practice essential activities of daily living (ADLs)—such as pouring liquids—without the real-world frustration or mess of failure. 
 
-*Existing solutions and gaps:* Existing solutions often rely heavily on pharmaceuticals, which can have severe side effects, or passive weighted wearables that cause muscle fatigue. This project aims to address these limitations by creating a dual-modality system: an active exoskeleton that differentiates between voluntary movement and involuntary tremors, paired with a completely decoupled Virtual Reality (VR) assessment environment. 
+By proposing a decoupled architecture where the physical exoskeleton (EduExo) and the virtual training software (Meta Quest 3 and Unity) operate entirely independently, this project actively fosters the key facilitators of AT adoption [3]. This modularity lowers patient stress, minimizes hardware dependency, and aligns directly with individual user preferences and comfort, allowing the training system to serve as an accessible, non-stigmatizing assistive tool. 
+
+*Existing solutions and gaps:* The WOTAS project already proved the possibility to suppress tremors using a robotic exoskeleton [4]. It shows that applying internal forces, so called haptic resistance, at the tremor frequency is a valid control strategy.
 
 ## 2. Supplies (Bill of Materials)
 To ensure full reproducibility, below is the comprehensive list of components required to build this prototype:
 
-| Component | Part Number / Type | Quantity | Estimated Cost | Vendor / Link |
-| :--- | :--- | :--- | :--- | :--- |
-| EduExo kit | N/A | 1 | [Cost] | [Link] |
-| Meta Quest 3 Head-Mounted Display | N/A | 1 | [Cost] | [Link] |
-| Unity (software) | Version [X.X] | 1 | Free | [Link] |
-| EMG Sensor | [Part Number] | [Quantity] | [Cost] | [Link] |
-| [Any specific microcontrollers?] | [Part Number] | [Quantity] | [Cost] | [Link] |
+# Supplies: Bill of Materials (BOM)
+
+This document outlines the complete Bill of Materials (BOM) required to replicate this prototype. It integrates the **EduExo 2.0 (Lite)** exoskeleton kit with a **Meta Quest 3S** virtual reality environment built in **Unity**.
+
+All estimated costs are provided in Euros (€).
+
+## 1. Exoskeleton Core Kit
+
+The physical exoskeleton, including all structural components, motors, and sensors, is sourced as a complete kit.
+
+| Component | Description | Estimated Cost | Sourcing Link |
+| :--- | :--- | :--- | :--- |
+| **EduExo 2.0 (Lite Kit)** | Complete kit containing 3D-printed parts, cuffs, Arduino Nano, EMG sensor, motor, and cables. | ~€350.00 | [Auxivo Store](https://www.auxivo.com/product-page/eduexo-2-0) |
+
+## 2. VR & Software Requirements
+
+These components are required to run and develop the virtual reality simulation.
+
+| Component | Description | Estimated Cost | Sourcing Link |
+| :--- | :--- | :--- | :--- |
+| **Meta Quest 3S (128GB)** | Standalone VR Headset for running the simulation. | €329.99 | [Amazon](https://www.amazon.de/s?k=meta+quest+3s) |
+| **Unity Software** | Game engine used for VR development (Personal Edition). | €0.00 | [Unity Download](https://unity.com/download) |
+
+## 3. Required Tools & Equipment
+
+To fully assemble the EduExo 2.0 prototype, you will need the following workspace tools and equipment. These can be sourced from standard hardware stores or Amazon.
+
+| Component | Estimated Cost | Amazon Sourcing Link |
+| :--- | :--- | :--- |
+| **Soldering iron & solder kit** | €15.00 | [Search on Amazon](https://www.amazon.de/s?k=soldering+iron+kit+with+solder) |
+| **Helping hand tool** | €12.00 | [Search on Amazon](https://www.amazon.de/s?k=helping+hands+soldering) |
+| **2 mm hex key (Allen wrench)** | €4.00 | [Search on Amazon](https://www.amazon.de/s?k=2mm+hex+key) |
+| **Precision screwdriver set** | €10.00 | [Search on Amazon](https://www.amazon.de/s?k=precision+screwdriver+set+flat+cross) |
+| **Wire stripping tool / side cutter**| €10.00 | [Search on Amazon](https://www.amazon.de/s?k=wire+stripping+tool+side+cutter) |
+| **Crimp pliers / flat pliers** | €15.00 | [Search on Amazon](https://www.amazon.de/s?k=crimp+pliers+flat) |
+| **Insulation tape** | €4.00 | [Search on Amazon](https://www.amazon.de/s?k=electrical+insulation+tape) |
+| **9V Rechargeable batteries + charger**| €18.00 | [Search on Amazon](https://www.amazon.de/s?k=9v+rechargeable+battery+with+charger) |
+
+---
+*Note: Prices are estimates and may vary based on region, availability, and taxes (VAT).*
 
 ## 3. Methods
 ### 3.1 Conceptual Framework & Component Selection
@@ -65,4 +100,6 @@ For future development, we suggest:
 
 [2] R. A. Hauser et al., "Burden of tremor in Parkinson's disease: A survey study," J. Parkinsons Dis., vol. 15, no. 3, pp. 541-551, Mar. 2025.
 
-[3] E. Rocon et al., "Design and Validation of a Rehabilitation Robotic Exoskeleton for Tremor Assessment and Suppression," IEEE Trans. Neural Syst. Rehabil. Eng., vol. 15, no. 3, pp. 367-378, Sep. 2007.
+[3] S. Malden et al., "Patient and Carer-Related Facilitators and Barriers to the Adoption of Assistive Technologies for the Care of Older Adults: Systematic Review," JMIR Aging, vol. 8, p. e73917, Nov. 2025.
+
+[4] E. Rocon et al., "Design and Validation of a Rehabilitation Robotic Exoskeleton for Tremor Assessment and Suppression," IEEE Trans. Neural Syst. Rehabil. Eng., vol. 15, no. 3, pp. 367-378, Sep. 2007.
