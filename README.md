@@ -71,8 +71,8 @@ As shown in the diagram above, the systems are deliberately decoupled. The exosk
 The system architecture was designed around a three-tier logic flow: Input, Logic, and Output. 
 
 * **Input Layer:** User interactions and spatial positioning are captured by the OVR Camera Rig, translating real-world hand and head movements into the virtual space.
-* **Logic Layer:** The core rules of the simulation are governed by Unity’s physics engine working in tandem with custom C# scripts. The `GlasHaptiek` script detects individual fluid particles as they enter predefined collision zones. This data is passed to a centralized `ScoreManager` script, which calculates the user's pouring accuracy. Additionally, a `ResetKnop` script acts as the master state controller, managing the spatial data of all interactive elements.
-* **Output Layer:** The system provides multimodal feedback. This includes the visual rendering of the fluid, real-time UI text updates on a physical in-game scoreboard, and audio/haptic feedback triggered upon object collisions.
+* **Logic Layer:** The core rules of the simulation are governed by Unity’s physics engine working together with custom C# scripts. The `GlasHaptiek` script detects individual fluid particles as they enter predefined collision zones. This data is passed to a centralized `ScoreManager` script, which calculates the user's pouring accuracy. Additionally, a `ResetKnop` script acts as the master state controller, managing the spatial data of all interactive elements.
+* **Output Layer:** This includes the visual rendering of the fluid, real-time UI text updates on a physical in-game scoreboard, and audio/haptic feedback triggered upon object collisions and pouring.
 
 ### 3.3 Construction & Programming
 Building the prototype required several practical steps:
@@ -85,6 +85,14 @@ During development, we managed several constraints:
 * **Signal Noise:** EMG sensors are highly susceptible to noise. We addressed this by [explain how you filtered the data or improved sensor placement].
 * **Actuator Control:** Tuning the PID controller of the EduExo to feel supportive rather than restrictive required iterative testing to find the right balance.
 * **Decoupling:** Ensuring the user could wear the Quest 3 comfortably while the exoskeleton was active required careful cable management and physical workspace setup.
+
+The practical construction of the prototype prioritized ergonomics and physical realism. The work surface, bottle, and glasses were positioned at a standard ergonomic height (Y ≈ 0.8). To ensure a reliable program and prevent users from accidentally walking off the virtual floor plane, an "invisible wall" was constructed using primitive cubes with disabled `Mesh Renderers` and active `Box Colliders`.
+
+To simulate realistic glass-on-glass interactions, the bottle and glasses were equipped with Rigidbodies (mass) and Colliders (solid surfaces). A custom Unity Physics Material was created with zero bounciness and low friction properties, ensuring the objects interacted with an abrupt, hard impact typical of real glass.
+
+The simulation logic required careful programming to handle edge cases and scalability:
+* Accuracy Logic: The `ScoreManager` script originally calculated accuracy by dividing the water in the glass by the total water poured, causing a visual bug showing "100% accuracy" before pouring occurred. This was restructured using conditional statements (`if (totaalWater == 0)`) to display a placeholder (`--%`) until the first particle triggers the system.
+* Scalable Resets: To accommodate varying difficulty levels, the `ResetKnop` script utilizes C# arrays (`[]`) to efficiently store, iterate through, and recall the exact startup positions and rotations of multiple glasses simultaneously.
 
 ## 4. Discussion
 Upon testing the prototype, the dual-system approach proved [describe performance—was it effective?]. The EduExo successfully provided resistance to simulated tremors, while the VR environment accurately tracked the pouring task. 
