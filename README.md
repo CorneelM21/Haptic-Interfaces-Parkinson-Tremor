@@ -11,7 +11,7 @@ By proposing a decoupled architecture where the physical exoskeleton (EduExo) an
 
 This simple system also allows patients to exercise without the need of a doctor, which supports the reduction of clinical pressure [5].
 
-*Existing solutions and gaps:* The WOTAS project already proved the possibility to suppress tremors using a robotic exoskeleton [4]. It shows that applying internal forces, so called haptic resistance, at the tremor frequency is a valid control strategy. Although it worked, the fact that this solution is too bulky, heavy and expensive were constantly returning points is users feedback.  
+*Existing solutions and gaps:* The WOTAS project already proved the possibility to suppress tremors using a robotic exoskeleton [4]. It shows that applying internal forces, so called haptic resistance, at the tremor frequency is a valid control strategy. Although it worked, the fact that this solution is too bulky, heavy and expensive were constantly returning points is users feedback. There is also a popular medication based solution, namely Levodopa. While Levodopa remains the "gold standard" for managing Parkinson's disease, it comes with a severe long-term drawback known as Levodopa-Induced Dyskinesia (LID) [8]. This consists of severe, involuntary, and uncontrollable movements. This traps patients in a dilemma where lowering the medication dosage returns the tremors while raising it worsens the dyskinesia. This clinical trap strongly justifies the need for a physical, haptic exoskeleton to provide tremor suppression.
 
 ## 2. Supplies (Bill of Materials)
 To ensure full reproducibility, below is the comprehensive list of components required to build this prototype:
@@ -107,3 +107,5 @@ For future development, we suggest:
 [6] C. G. Canning et al., "Virtual reality in research and rehabilitation of gait and balance in Parkinson disease," Nature Reviews Neurology, vol. 16, no. 8, pp. 409-425, Aug. 2020.
 
 [7] Q. Wu, M. Qiu, X. Liu, W. A. He, T. Yang, and C. Jia, "The Role of Virtual Reality on Parkinson's Disease Management: A Bibliometric and Content Analysis," Sensors, vol. 25, no. 5, art. no. 1432, Feb. 2025.
+
+[8] L. di Biase et al., "Levodopa-Induced Dyskinesias in Parkinson's Disease: An Overview on Pathophysiology, Clinical Manifestations, Therapy Management Strategies and Future Directions," J. Clin. Med., vol. 12, no. 13, p. 4427, Jul. 2023.
