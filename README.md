@@ -56,14 +56,24 @@ To fully assemble the EduExo 2.0 prototype, you will need the following workspac
 ## 3. Methods
 ### 3.1 Conceptual Framework & Component Selection
 The conceptual framework for our design relies on a modular, two-part system that can operate entirely independently:
-1. **Physical Haptic Interface:** We utilized the EduExo kit paired with an external EMG sensor to create an active tremor-suppression wearable. The EMG sensor was chosen to detect the user's muscle signals, allowing the system's control logic to differentiate between high-frequency unwanted tremors and lower-frequency intended movements. 
-2. **Virtual Training Environment:** We used the Meta Quest 3 and Unity to build a safe, gamified assessment scenario. This allows the patient to practice pouring water into various-sized glasses while receiving real-time visual feedback via a virtual scoreboard.
+
+1. **Physical Haptic Interface:** We utilized the EduExo kit paired with an external EMG sensor to create an active tremor-suppression wearable. The EMG sensor was chosen to detect the user's muscle signals, allowing the system's control logic to differentiate between high-frequency unwanted tremors and lower-frequency intended movements.
+
+2. **Virtual Training Environment:** The primary objective of this part of the project was to develop a realistic, accessible, and standalone Virtual Reality (VR) pouring simulation for patient rehabilitation and training. To achieve this, the Unity 3D Engine was used as the foundational software environment. Unity provides a robust, built-in physics engine and modular C# scripting, which are essential for simulating realistic fluid dynamics, tracking particles, and managing object collisions in real-time.
+
+For the VR integration, the Meta Quest SDK was utilized. This SDK provides highly optimized, pre-configured interaction logic, such as hand-tracking and grab mechanics, which drastically accelerated and facilitated the prototyping phase. In order to use this SDK, a standalone Meta Quest headset was selected. This also has major advantages over a standard PC headset, as operating the application natively on the headset removes the constraint of physical cables, thereby maximizing accessibility, safety, and freedom of movement for patients during their rehabilitation exercises.
 
 ### 3.2 System Architecture
 *(Upload an image of your system architecture showing both the Exo and the VR setup, then link it here)*
 ![System Architecture Diagram](link_to_your_uploaded_image.png)
 
 As shown in the diagram above, the systems are deliberately decoupled. The exoskeleton operates on a localized control loop via [mention the microcontroller/PC running the EMG code], while the VR simulation runs entirely on the Meta Quest 3 hardware. 
+
+The system architecture was designed around a three-tier logic flow: Input, Logic, and Output. 
+
+* **Input Layer:** User interactions and spatial positioning are captured by the OVR Camera Rig, translating real-world hand and head movements into the virtual space.
+* **Logic Layer:** The core rules of the simulation are governed by Unity’s physics engine working in tandem with custom C# scripts. The `GlasHaptiek` script detects individual fluid particles as they enter predefined collision zones. This data is passed to a centralized `ScoreManager` script, which calculates the user's pouring accuracy. Additionally, a `ResetKnop` script acts as the master state controller, managing the spatial data of all interactive elements.
+* **Output Layer:** The system provides multimodal feedback. This includes the visual rendering of the fluid, real-time UI text updates on a physical in-game scoreboard, and audio/haptic feedback triggered upon object collisions.
 
 ### 3.3 Construction & Programming
 Building the prototype required several practical steps:
