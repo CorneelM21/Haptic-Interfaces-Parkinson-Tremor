@@ -5,11 +5,13 @@ Project for Haptic Interfaces Course
 ## 1. Introduction
 *The medical context:* In current medical practice, Parkinson's disease-induced resting and action tremors present a significant challenge, severely impacting patients' quality of life and their ability to perform activities of daily living (ADLs) such as drinking or eating [1], [2]. It also has a large distressing impact on their social abilities and mental health, even in early-stage PArkinson's disease.
 
-*The haptic advantage:* Haptic technology offers a multi-modal advantage by addressing both the physical and cognitive requirements of Parkinson's disease rehabilitation. Physically, active mechanical damping systems can dynamically counteract involuntary resting and action tremors in real-time, providing targeted resistance that dampens pathological oscillations without impeding a patient's voluntary motor intents [4]. Cognitively, haptic components can be simulated inside immersive virtual reality (VR) spaces to provide a safe, repeatable environment where patients practice essential activities of daily living (ADLs)—such as pouring liquids—without the real-world frustration or mess of failure. 
+*The haptic advantage:* Haptic technology offers a multi-modal advantage by addressing both the physical and cognitive requirements of Parkinson's disease rehabilitation. Physically, active mechanical damping systems can dynamically counteract involuntary resting and action tremors in real-time, providing targeted resistance that dampens pathological oscillations without impeding a patient's voluntary motor intents [4]. Cognitively, haptic components can be simulated inside immersive virtual reality (VR) spaces to provide a safe, repeatable environment where patients practice essential activities of daily living (ADLs)—such as pouring liquids—without the real-world frustration or mess of failure [6], [7].
 
 By proposing a decoupled architecture where the physical exoskeleton (EduExo) and the virtual training software (Meta Quest 3 and Unity) operate entirely independently, this project actively fosters the key facilitators of AT adoption [3]. This modularity lowers patient stress, minimizes hardware dependency, and aligns directly with individual user preferences and comfort, allowing the training system to serve as an accessible, non-stigmatizing assistive tool. 
 
-*Existing solutions and gaps:* The WOTAS project already proved the possibility to suppress tremors using a robotic exoskeleton [4]. It shows that applying internal forces, so called haptic resistance, at the tremor frequency is a valid control strategy.
+This simple system also allows patients to exercise without the need of a doctor, which supports the reduction of clinical pressure [5].
+
+*Existing solutions and gaps:* The WOTAS project already proved the possibility to suppress tremors using a robotic exoskeleton [4]. It shows that applying internal forces, so called haptic resistance, at the tremor frequency is a valid control strategy. Although it worked, the fact that this solution is too bulky, heavy and expensive were constantly returning points is users feedback.  
 
 ## 2. Supplies (Bill of Materials)
 To ensure full reproducibility, below is the comprehensive list of components required to build this prototype:
@@ -99,3 +101,9 @@ For future development, we suggest:
 [3] S. Malden et al., "Patient and Carer-Related Facilitators and Barriers to the Adoption of Assistive Technologies for the Care of Older Adults: Systematic Review," JMIR Aging, vol. 8, p. e73917, Nov. 2025.
 
 [4] E. Rocon et al., "Design and Validation of a Rehabilitation Robotic Exoskeleton for Tremor Assessment and Suppression," IEEE Trans. Neural Syst. Rehabil. Eng., vol. 15, no. 3, pp. 367-378, Sep. 2007.
+
+[5] D. I. Feldman et al., "A Nationwide Telehealth Heart Failure Program: Can Remote Patient Monitoring and Guideline Directed Treatment Protocols Help Bridge the Gaps in Heart Failure Management?," Journal of Cardiac Failure, vol. 29, no. 3, Mar. 2023.
+
+[6] C. G. Canning et al., "Virtual reality in research and rehabilitation of gait and balance in Parkinson disease," Nature Reviews Neurology, vol. 16, no. 8, pp. 409-425, Aug. 2020.
+
+[7] Q. Wu, M. Qiu, X. Liu, W. A. He, T. Yang, and C. Jia, "The Role of Virtual Reality on Parkinson's Disease Management: A Bibliometric and Content Analysis," Sensors, vol. 25, no. 5, art. no. 1432, Feb. 2025.
