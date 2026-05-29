@@ -139,7 +139,7 @@ However, practical testing revealed several significant hardware and mechanical 
 Despite these hardware limitations on the physical side, having a separated VR environment is highly beneficial. It is significantly less stressful for users, as a physical water-pouring failure during an involuntary tremor spike did not result in an actual mess, allowing them to focus entirely on their motor control.
 
 ## 5. Conclusion and Future Work
-In summary, the most significant aspect of this prototype is its modularity: providing physical assistance and virtual assessment as standalone or complementary tools. The project successfully validates the control strategy of using EMG inputs to drive a haptic orthosis, while effectively offloading the cognitive and spatial training to an immersive, risk-free Meta Quest 3 environment.
+In summary, the most significant aspect of this prototype is its modularity: providing physical assistance and virtual assessment as standalone or complementary tools. The project successfully validates the control strategy of using EMG inputs to drive a haptic orthosis, while effectively offloading the cognitive and spatial training to an immersive, risk-free Meta Quest 3S environment.
 
 However, to transition this prototype from an educational proof-of-concept into a clinically viable medical device, the physical hardware requires substantial upgrades. For future development, we suggest the following improvements:
 
