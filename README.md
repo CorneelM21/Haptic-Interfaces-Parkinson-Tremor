@@ -56,8 +56,10 @@ To fully assemble the EduExo 2.0 prototype, you will need the following workspac
 
 ### 3.1 Conceptual Framework & Component Selection
 The conceptual framework for our design relies on a modular, two-part system that can operate entirely independently:
-1. **Physical Haptic Interface:** We utilized the EduExo kit paired with an external EMG sensor to create an active tremor-suppression wearable. The EMG sensor was chosen to detect the user's muscle signals, allowing the system's control logic to differentiate between high-frequency unwanted tremors and lower-frequency intended movements. 
-2. **Virtual Training Environment:** We used the Meta Quest 3 and Unity to build a safe, gamified assessment scenario. This allows the patient to practice pouring water into various-sized glasses while receiving real-time visual feedback via a virtual scoreboard.
+1. **Physical Haptic Interface:** The conceptual framework for our design relies on a localized, active haptic interface utilizing the EduExo kit. The primary objective of this project was to develop a wearable, robotic exoskeleton capable of estimating user movement intentions and providing active physical support. To achieve this, an external surface Electromyography (EMG) sensor was chosen as the primary input mechanism. This allows the system's control logic to read the electrical activity of the user's muscles and differentiate between resting states and deliberate movement. The Arduino Nano was selected as the foundational microcontroller due to its compact form factor, native analog-to-digital converters, and capacity to handle pulse-width modulation (PWM). For the output actuation, a servomotor was utilized. This specific motor features an integrated potentiometer, which acts as a joint angle sensor, allowing the system to form a closed-loop position controller by constantly comparing the desired angle with the motor's actual physical state.
+
+2. **Virtual Training Environment:** The primary objective of this part of the project was to develop a realistic, accessible, and standalone Virtual Reality (VR) pouring simulation for patient rehabilitation and training. To achieve this, the Unity 3D Engine was used as the foundational software environment. Unity provides a robust, built-in physics engine and modular C# scripting, which are essential for simulating realistic fluid dynamics, tracking particles, and managing object collisions in real-time.
+For the VR integration, the Meta Quest SDK was utilized. This SDK provides highly optimized, pre-configured interaction logic, such as hand-tracking and grab mechanics, which drastically accelerated and facilitated the prototyping phase. In order to use this SDK, a standalone Meta Quest headset was selected. This also has major advantages over a standard PC headset, as operating the application natively on the headset removes the constraint of physical cables, thereby maximizing accessibility, safety, and freedom of movement for patients during their rehabilitation exercises.
 
 ### 3.2 System Architecture
 
@@ -66,16 +68,45 @@ The conceptual framework for our design relies on a modular, two-part system tha
 
 As shown in the schematic above, the systems are deliberately decoupled. The exoskeleton operates on a localized control loop via the Arduino microcontroller running the EMG classification code, while the VR simulation runs entirely on the Meta Quest 3 hardware. The motor controller regulates the haptic resistance based on the real-time EMG threshold data.
 
+The system architecture of the exoskeleton is designed around a highly localized, untethered, closed-loop control system. To ensure maximum mobility and user safety, the entire hardware suite is decoupled from grid power and operates independently via an onboard 9V battery power supply.
+
+The architecture follows a three-tier logic flow: Input, Logic, and Output.
+
+* **Input Layer:** The system relies on two primary streams of continuous data. First, user movement intentions (force) are captured via surface electrodes attached to the forearm muscles; this biological data is amplified by the EMG sensor board and sent as an analog voltage signal to the Arduino Nano. Concurrently, the servomotor’s integrated potentiometer acts as a joint angle sensor, sending real-time positional feedback data back to the microcontroller.
+
+* **Logic Layer:** The core behavior of the exoskeleton is governed by custom C++ control scripts running on the Arduino Nano. The system utilizes an admittance control strategy. The high-level controller reads the raw muscle activity to estimate the user's intended movement. This reading is compared against a predefined activation threshold. If the signal exceeds the threshold, the high-level controller calculates a desired joint angle. This desired position is then passed to the low-level position controller, which computes the difference (position error) between the desired angle and the actual angle measured by the motor's potentiometer.
+
+* **Output Layer:** Once the logic layer computes the necessary mechanical support, the low-level controller sends pulse-width modulation (PWM) commands to the servomotor. The motor acts as the physical plant, driving the 3D-printed exoskeleton structure to flex or relax the user's elbow joint based on the calculated parameters, thereby completing the closed loop.
+
+For the VR system, the same three-tier flow applies:
+
+* **Input Layer:** User interactions and spatial positioning are captured by the OVR Camera Rig, translating real-world hand and head movements into the virtual space.
+* **Logic Layer:** The core rules of the simulation are governed by Unity’s physics engine working together with custom C# scripts. The `GlasHaptiek` script detects individual fluid particles as they enter predefined collision zones. This data is passed to a centralized `ScoreManager` script, which calculates the user's pouring accuracy. Additionally, a `ResetKnop` script acts as the master state controller, managing the spatial data of all interactive elements.
+* **Output Layer:** This includes the visual rendering of the fluid, real-time UI text updates on a physical in-game scoreboard, and audio/haptic feedback triggered upon object collisions and pouring.
+
 ### 3.3 Construction & Programming
 
 *(Fully Assembled EduExo Mounted on the User)*
 ![Assembled Exoskeleton Prototype](OverviewArm.jpg)
 
-Building the prototype required several practical steps:
-1. **Exoskeleton Integration:** We assembled the EduExo kit and mounted the EMG sensors on the user's arm, ensuring secure placement to capture clean myoelectric signals. 
-2. **Control Logic:** The suppression algorithm was programmed to filter out tremor frequencies. When a deliberate movement is detected via the EMG, the motors allow the movement; when a tremor is detected, the motors actively resist it.
-3. **VR Programming:** Using Unity, we programmed a liquid physics simulation and collision detection for the glasses. The scoring system calculates the ratio of correctly poured liquid versus spilled liquid to quantify the user's motor control.
+Building the physical prototype required precise electronic assembly and mechanical routing to ensure both safety and functionality:
 
+**Hardware Integration:** The exoskeleton's circuitry was built around an Arduino Terminal Adapter. This adapter eliminated the need for complex breadboard wiring and allowed for secure, semi-permanent screw-terminal connections for the peripheral components. The power circuit was constructed by soldering a 9V battery connection cable to a physical ON/OFF switch. To prevent short circuits, 4.8 mm heat-shrink tubing was applied to insulate all exposed soldered joints. Similarly, the AUX socket—which receives the analog signal from the EMG sensor—was prepared by stripping the wires and connecting them to the designated pins on the Terminal Adapter (Signal to an analog pin, alongside 3.3V power and Ground). To maintain an ergonomic and safe profile, all internal electronics were routed through designated channels inside the 3D-printed Upper Arm Cover, ensuring that motor wires and AUX cables did not impede the user's range of motion or get caught in the rotating joints.
+
+**Control Logic & Software Implementation:**
+The logic required careful C++ programming within the Arduino IDE to handle the dynamic nature of human muscle signals. The software implementation was broken down into several key functional requirements:
+
+**Signal Mapping:** Raw EMG data is highly variable. To make the exoskeleton responsive, we utilized the Arduino map function to proportionally convert the raw analog input range directly into safe servomotor angles. This ensured that a stronger muscle contraction naturally resulted in a proportionally larger flexion from the motor, imitating an intuitive biological response.
+
+**Admittance Control & Thresholding:** Because resting muscles still produce baseline electrical noise, the motor would naturally jitter without a software filter. A hardcoded threshold variable was introduced to the main loop. The program actively reads the incoming signal and only engages the servomotor when the user's muscle activity explicitly exceeds this noise floor. If the signal is below the threshold, the motor remains passive, allowing free movement.
+
+The practical construction of the VR prototype prioritized ergonomics and physical realism. The work surface, bottle, and glasses were positioned at a standard ergonomic height (Y ≈ 0.8). To ensure a reliable program and prevent users from accidentally walking off the virtual floor plane, an "invisible wall" was constructed using primitive cubes with disabled `Mesh Renderers` and active `Box Colliders`.
+
+To simulate realistic glass-on-glass interactions, the bottle and glasses were equipped with Rigidbodies (mass) and Colliders (solid surfaces). A custom Unity Physics Material was created with zero bounciness and low friction properties, ensuring the objects interacted with an abrupt, hard impact typical of real glass.
+
+The simulation logic required careful programming to handle edge cases and scalability:
+* **Accuracy Logic:** The `ScoreManager` script originally calculated accuracy by dividing the water in the glass by the total water poured, causing a visual bug showing "100% accuracy" before pouring occurred. This was restructured using conditional statements (`if (totaalWater == 0)`) to display a placeholder (`--%`) until the first particle triggers the system.
+* **Scalable Resets:** To accommodate varying difficulty levels, the `ResetKnop` script utilizes C# arrays (`[]`) to efficiently store, iterate through, and recall the exact startup positions and rotations of multiple glasses simultaneously.
 
 ### 3.4 Hardware Constraints & Troubleshooting
 During iterative development and testing of the exoskeleton, several hardware constraints were identified. Resolving these required strict safety protocols, precise physical calibration, and software-level filtering to ensure a stable user experience.
