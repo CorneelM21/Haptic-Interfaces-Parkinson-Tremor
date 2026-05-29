@@ -79,11 +79,18 @@ For the VR system, the same three-tier flow applies:
 * **Output Layer:** This includes the visual rendering of the fluid, real-time UI text updates on a physical in-game scoreboard, and audio/haptic feedback triggered upon object collisions and pouring.
 
 ### 3.3 Construction & Programming
-Building the prototype required several practical steps:
-1. **Exoskeleton Integration:** We assembled the EduExo kit and mounted the EMG sensors on the user's [specify the muscle group, e.g., forearm/biceps]. 
-2. **Control Logic:** The suppression algorithm was programmed to filter out tremor frequencies. When a deliberate movement is detected via the EMG, the motors allow the movement; when a tremor is detected, the motors actively resist it.
+Building the physical prototype required precise electronic assembly and mechanical routing to ensure both safety and functionality:
 
-The practical construction of the prototype prioritized ergonomics and physical realism. The work surface, bottle, and glasses were positioned at a standard ergonomic height (Y ≈ 0.8). To ensure a reliable program and prevent users from accidentally walking off the virtual floor plane, an "invisible wall" was constructed using primitive cubes with disabled `Mesh Renderers` and active `Box Colliders`.
+**Hardware Integration:** The exoskeleton's circuitry was built around an Arduino Terminal Adapter. This adapter eliminated the need for complex breadboard wiring and allowed for secure, semi-permanent screw-terminal connections for the peripheral components. The power circuit was constructed by soldering a 9V battery connection cable to a physical ON/OFF switch. To prevent short circuits, 4.8 mm heat-shrink tubing was applied to insulate all exposed soldered joints. Similarly, the AUX socket—which receives the analog signal from the EMG sensor—was prepared by stripping the wires and connecting them to the designated pins on the Terminal Adapter (Signal to an analog pin, alongside 3.3V power and Ground). To maintain an ergonomic and safe profile, all internal electronics were routed through designated channels inside the 3D-printed Upper Arm Cover, ensuring that motor wires and AUX cables did not impede the user's range of motion or get caught in the rotating joints.
+
+**Control Logic & Software Implementation:**
+The logic required careful C++ programming within the Arduino IDE to handle the dynamic nature of human muscle signals. The software implementation was broken down into several key functional requirements:
+
+**Signal Mapping:** Raw EMG data is highly variable. To make the exoskeleton responsive, we utilized the Arduino map function to proportionally convert the raw analog input range directly into safe servomotor angles. This ensured that a stronger muscle contraction naturally resulted in a proportionally larger flexion from the motor, imitating an intuitive biological response.
+
+**Admittance Control & Thresholding:** Because resting muscles still produce baseline electrical noise, the motor would naturally jitter without a software filter. A hardcoded threshold variable was introduced to the main loop. The program actively reads the incoming signal and only engages the servomotor when the user's muscle activity explicitly exceeds this noise floor. If the signal is below the threshold, the motor remains passive, allowing free movement.
+
+The practical construction of the VR prototype prioritized ergonomics and physical realism. The work surface, bottle, and glasses were positioned at a standard ergonomic height (Y ≈ 0.8). To ensure a reliable program and prevent users from accidentally walking off the virtual floor plane, an "invisible wall" was constructed using primitive cubes with disabled `Mesh Renderers` and active `Box Colliders`.
 
 To simulate realistic glass-on-glass interactions, the bottle and glasses were equipped with Rigidbodies (mass) and Colliders (solid surfaces). A custom Unity Physics Material was created with zero bounciness and low friction properties, ensuring the objects interacted with an abrupt, hard impact typical of real glass.
 
