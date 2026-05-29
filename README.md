@@ -66,7 +66,7 @@ For the VR integration, the Meta Quest SDK was utilized. This SDK provides highl
 *(Electrical Schematic of the EduExo exoskeleton)*
 ![System Wiring Diagram](WiringDiagram.jpg)
 
-As shown in the schematic above, the systems are deliberately decoupled. The exoskeleton operates on a localized control loop via the Arduino microcontroller running the EMG classification code, while the VR simulation runs entirely on the Meta Quest 3 hardware. The motor controller regulates the haptic resistance based on the real-time EMG threshold data.
+As shown in the schematic above, the systems are deliberately decoupled. The exoskeleton operates on a localized control loop via the Arduino microcontroller running the EMG classification code, while the VR simulation runs entirely on the Meta Quest 3S hardware. The motor controller regulates the haptic resistance based on the real-time EMG threshold data.
 
 The system architecture of the exoskeleton is designed around a highly localized, untethered, closed-loop control system. To ensure maximum mobility and user safety, the entire hardware suite is decoupled from grid power and operates independently via an onboard 9V battery power supply.
 
