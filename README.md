@@ -100,12 +100,15 @@ The simulation logic required careful programming to handle edge cases and scala
 
 
 ### 3.4 Hardware Constraints & Troubleshooting
-During development, we managed several constraints:
-* **Signal Noise:** EMG sensors are highly susceptible to noise. We addressed this by [explain how you filtered the data or improved sensor placement].
-* **Actuator Control:** Tuning the PID controller of the EduExo to feel supportive rather than restrictive required iterative testing to find the right balance.
-* **Decoupling:** Ensuring the user could wear the Quest 3 comfortably while the exoskeleton was active required careful cable management and physical workspace setup.
+During iterative development and testing of the exoskeleton, several hardware constraints were identified. Resolving these required strict safety protocols, precise physical calibration, and software-level filtering to ensure a stable user experience.
 
-During iterative development, several technical constraints were identified and resolved to ensure a stable user experience:
+**Electrical Safety & Short Circuits:** Wearable exoskeletons introduce significant risks if subjected to power surges or exposed wiring. To mitigate this, grid power was strictly prohibited during operation; the system was constrained entirely to a limited-current 9V battery. During the initial electronic assembly, short circuits were a primary concern. Our standard troubleshooting protocol involved verifying the power state via the onboard LEDs. If the LEDs failed to illuminate, or if components began to heat up, the system was immediately powered down. Diagnostics involved visually inspecting the Terminal Adapter, the AUX socket connections, and ensuring all exposed wire interfaces were fully isolated by the 4.8 mm heat-shrink tubing.
+
+**Signal Noise and Sensor Placement:** Surface Electromyography (EMG) sensors are intrinsically susceptible to noise, crosstalk from surrounding muscles, and poor skin contact. Early testing revealed highly erratic, unpredictable motor behavior if the electrodes were placed improperly. This constraint was resolved by enforcing a strict sensor placement protocol: the two measuring electrodes were aligned directly over the part of the active muscle and under the arm strap, while the reference electrode was placed on an electrically neutral, bony area near the elbow. This ensured the reference node did not inadvertently record conflicting muscle activity, thereby cleaning the baseline signal.
+
+**Baseline Jitter and Threshold Calibration:** Even with optimized electrode placement, resting human muscles continuously produce low-level electrical noise that can cause the servomotor to constantly twitch or behave in a jittery manner. To resolve this, we utilized the Arduino IDE's Serial Plotter to visually monitor the raw analog signal during both resting and flexing states. This data allowed us to accurately calibrate a hardcoded threshold variable within our control logic. The software was refined so that the servomotor actively disengages when the signal falls below this threshold, ensuring the motor remains entirely passive and stable until a deliberate, meaningful muscle contraction is executed by the user.
+
+During iterative development of the Simulation software, several technical constraints were identified and resolved to ensure a stable user experience:
 
 * **Tracking Origin Constraint:** Early testing revealed a calibration issue where the virtual table appeared to float at chest height because the headset tracking origin defaulted to *Eye Level*. This was resolved by forcing the OVR Manager to use *Floor Level* tracking.
 * **Physics Ghosting:** The default grab mechanics caused held objects to become *Kinematic* (ignoring the physics engine). When holding the bottle and glass, they phased through one another. This was resolved by disabling `Kinematic While Selected` and utilizing *Velocity Tracking*, forcing objects to follow hands using physical forces rather than teleportation.
